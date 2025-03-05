@@ -31,6 +31,11 @@ jobs:
       - name: Update kubeconfig for EKS
         run: |
           aws eks update-kubeconfig --region $AWS_REGION --name $CLUSTER_NAME
+        
+      - name: Update kubeconfig for EKS 2
+        run: |
+          aws eks update-kubeconfig --region $AWS_REGION --name $CLUSTER_NAME
+          kubectl config get-contexts  # Vérifie si le cluster est bien configuré
 
       - name: Create namespace if not exists
         run: |
