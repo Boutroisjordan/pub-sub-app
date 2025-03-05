@@ -39,7 +39,7 @@ spec:
                 secretKeyRef:
                   key: rabbit-username
                   name: rabbit-username
-          image: matthieuf/pubsub-api:1.2
+          image: jordanbtrs/api
           name: api
           ports:
             - containerPort: 80

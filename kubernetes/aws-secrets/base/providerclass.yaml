@@ -10,7 +10,8 @@ spec:
         objectType: "secretsmanager"
         objectAlias: "rabbitmq-username"
       - objectName: "RabbitMQPassword"
-        objectType: "secretsmanager"
+   kubectl apply -k github.com/kubernetes-sigs/secrets-store-csi-driver/deploy/kubernetes/secret-provider-class/crds
+     objectType: "secretsmanager"
         objectAlias: "rabbitmq-password"
       - objectName: "MSSQL-SA-PASSWORD"
         objectType: "secretsmanager"

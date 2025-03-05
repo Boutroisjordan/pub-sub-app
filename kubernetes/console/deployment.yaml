@@ -32,7 +32,7 @@ spec:
                 secretKeyRef:
                   key: rabbit-username
                   name: rabbit-username
-          image: matthieuf/pubsub-console:1.0
+          image: jordanbtrs/console
           name: lab-console
           resources: {}
           volumeMounts:
