@@ -75,7 +75,7 @@ spec:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: "kv-mfolabs"
+              secretProviderClass: "aws-secrets-manager"
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress

@@ -1,0 +1,47 @@
+name: Deploy API to EKS
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+env:
+  CLUSTER_NAME: ${{ secrets.EKS_CLUSTER_NAME }}
+  NAMESPACE_NAME: ${{ secrets.APP_NAMESPACE }}
+  DEPLOYMENT_NAME: "api"
+  AWS_REGION: "eu-west-3"
+
+jobs:
+  deploy:
+    permissions:
+      contents: read
+      id-token: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets. }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Update kubeconfig for EKS
+        run: |
+          aws eks update-kubeconfig --region $AWS_REGION --name $CLUSTER_NAME
+
+      - name: Create namespace if not exists
+        run: |
+          kubectl create namespace ${{ env.NAMESPACE_NAME }} --dry-run=client -o yaml | kubectl apply -f -
+      
+      - name: Deploy secrets to EKS
+        run: |
+          cd kubernetes/keyvault
+          kubectl apply -k ./overlays/demo -n ${{ env.NAMESPACE_NAME }}
+      
+      - name: Deploy ${{ env.DEPLOYMENT_NAME }} to EKS
+        run: |
+          cd kubernetes/${{ env.DEPLOYMENT_NAME }}
+          kubectl apply -k ./overlays/demo -n ${{ env.NAMESPACE_NAME }}
