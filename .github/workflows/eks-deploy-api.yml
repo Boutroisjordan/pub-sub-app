@@ -36,6 +36,13 @@ jobs:
         run: |
           aws eks update-kubeconfig --region $AWS_REGION --name $CLUSTER_NAME
           kubectl config get-contexts  # Vérifie si le cluster est bien configuré
+      
+      - name: Verify kubeconfig is set correctly
+        run: |
+          kubectl config view
+          kubectl config current-context
+          kubectl get nodes  # Vérifie que tu peux récupérer des informations du cluster
+
 
       - name: Create namespace if not exists
         run: |
