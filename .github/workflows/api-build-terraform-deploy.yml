@@ -18,8 +18,8 @@ name: Build, Terraform and Deploy API app
 
 on:
   push:
-  branches:
-    - feature
+    branches:
+      - feature
 
 #Special permissions required for Azure OIDC authentication
 permissions:
