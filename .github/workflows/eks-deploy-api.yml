@@ -48,9 +48,9 @@ jobs:
         run: |
           kubectl create namespace ${{ env.NAMESPACE_NAME }} --dry-run=client -o yaml | kubectl apply -f -
       
-      - name: Deploy secrets to EKS
+      - name: Deploy AWS secrets to EKS
         run: |
-          cd kubernetes/keyvault
+          cd kubernetes/aws-secrets
           kubectl apply -k ./overlays/demo -n ${{ env.NAMESPACE_NAME }}
       
       - name: Deploy ${{ env.DEPLOYMENT_NAME }} to EKS
